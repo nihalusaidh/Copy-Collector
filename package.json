@@ -1,0 +1,45 @@
+{
+  "name": "copy-collector",
+  "version": "1.0.0",
+  "author": "Copy Collector",
+  "description": "Copy Collector - Collect text from any app, paste all in order",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win",
+    "dist": "electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "com.nihal.copy-collector",
+    "productName": "Copy Collector",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "icons/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Copy Collector"
+    }
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^26.15.3",
+    "png-to-ico": "^3.0.2"
+  }
+}

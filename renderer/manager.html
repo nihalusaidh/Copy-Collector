@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="manager.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="header-left">
+        <h1>Copy Collector</h1>
+        <span id="count-badge">0</span>
+      </div>
+      <div class="header-right">
+        <button id="history-btn" title="History">📋</button>
+        <button id="refresh-btn" title="Refresh (Ctrl+R)">↻</button>
+        <button id="theme-toggle" title="Theme (Ctrl+D)">Dark</button>
+      </div>
+    </header>
+
+    <div id="search-bar">
+      <input id="search-input" type="text" placeholder="Search items..." spellcheck="false">
+    </div>
+
+    <!-- Main view -->
+    <div id="main-view">
+      <div id="empty-state">
+        <p>No items collected yet</p>
+        <p class="hint">Copy text in any app &mdash; click the CC icon to save</p>
+      </div>
+
+      <div id="collection-list"></div>
+
+      <footer id="main-footer">
+        <button id="copyAllBtn" class="primary-btn">Copy All</button>
+        <button id="selectCopyBtn" class="secondary-btn">Select to Copy</button>
+        <button id="clearBtn" class="danger-btn">Clear All</button>
+      </footer>
+
+      <footer id="copy-footer" style="display:none">
+        <button id="copySelectedBtn" class="primary-btn">Copy Selected</button>
+        <button id="cancelCopyBtn" class="secondary-btn">Cancel</button>
+      </footer>
+    </div>
+
+    <div id="settings-bar">
+      <button id="session-btn" class="settings-btn" title="Save current collection to history and clear">⏹ Complete Session</button>
+      <label id="startup-label">
+        <input type="checkbox" id="startup-toggle"> Launch on startup
+      </label>
+    </div>
+
+    <div class="shortcut-hint">Ctrl+R Refresh &middot; Ctrl+F Search &middot; Ctrl+D Theme &middot; Del Remove</div>
+  </div>
+
+  <!-- History overlay -->
+  <div id="history-overlay" style="display:none">
+    <div id="history-header">
+      <button id="history-back-btn">← Back</button>
+      <h2>History</h2>
+    </div>
+    <div id="history-list"></div>
+    <div id="history-empty">
+      <p>No saved sessions yet</p>
+      <p class="hint">Complete a session to save it here</p>
+    </div>
+    <footer id="history-footer">
+      <button id="histCopyAllBtn" class="primary-btn">Copy All</button>
+      <button id="histSelectBtn" class="secondary-btn">Select to Copy</button>
+    </footer>
+    <footer id="history-copy-footer" style="display:none">
+      <button id="histCopySelBtn" class="primary-btn">Copy Selected</button>
+      <button id="histCancelBtn" class="secondary-btn">Cancel</button>
+    </footer>
+  </div>
+
+  <script src="manager.js"></script>
+</body>
+</html>
