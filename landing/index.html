@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copy Collector — Collect text from any app, paste all in order</title>
+<meta name="description" content="Copy Collector: A tiny desktop app that sits in your system tray and lets you collect text from any Windows app — Word, Chrome, PDF readers, WPS. Confirm each save with one click, then paste everything in order.">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; background: #0d0d0f; color: #e0e0e6; line-height: 1.6; }
+a { color: #8ab4f8; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 80px 0; }
+.section-title { font-size: 28px; font-weight: 700; margin-bottom: 16px; text-align: center; color: #fff; }
+.section-sub { text-align: center; color: #999; margin-bottom: 48px; font-size: 16px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; border: none; transition: all .2s; }
+.btn-primary { background: linear-gradient(135deg, #3a3a3e, #1a1a1e); color: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.4); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(0,0,0,.5); text-decoration: none; }
+.btn-primary svg { width: 22px; height: 22px; fill: currentColor; }
+
+/* Hero */
+.hero { text-align: center; padding: 100px 0 60px; }
+.hero-logo { width: 80px; height: 80px; margin: 0 auto 24px; }
+.hero h1 { font-size: 44px; font-weight: 800; color: #fff; margin-bottom: 16px; letter-spacing: -0.5px; }
+.hero p { font-size: 18px; color: #999; max-width: 600px; margin: 0 auto 32px; }
+.hero .btn-wrap { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.hero .small-note { font-size: 13px; color: #666; margin-top: 12px; }
+.hero .small-note a { color: #777; }
+
+/* Steps */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 16px; }
+.step { text-align: center; padding: 32px 20px; border-radius: 12px; background: #141418; border: 1px solid #222; }
+.step-num { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #3a3a3e, #1a1a1e); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-weight: 700; font-size: 16px; color: #fff; }
+.step h3 { font-size: 18px; margin-bottom: 8px; color: #fff; }
+.step p { font-size: 14px; color: #888; }
+.step .ill { width: 100%; height: 100px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; }
+
+/* Features */
+.features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.feature { padding: 24px; border-radius: 10px; background: #141418; border: 1px solid #222; }
+.feature h3 { font-size: 16px; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.feature h3 svg { width: 18px; height: 18px; fill: #8ab4f8; flex-shrink: 0; }
+.feature p { font-size: 14px; color: #888; }
+
+/* Comparison */
+.compare-wrap { overflow-x: auto; }
+.compare { width: 100%; border-collapse: collapse; font-size: 14px; }
+.compare th, .compare td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #222; }
+.compare th { color: #fff; font-weight: 600; background: #141418; }
+.compare td { color: #aaa; }
+.compare td:first-child { font-weight: 500; color: #ccc; }
+.compare .yes { color: #4ade80; }
+.compare .no { color: #666; }
+
+/* Footer */
+.footer { text-align: center; padding: 40px 0; border-top: 1px solid #222; color: #555; font-size: 14px; }
+.footer a { color: #777; }
+
+/* Placeholder illustration boxes */
+.ill-placeholder { background: #1a1a20; border: 1px dashed #333; border-radius: 8px; color: #555; font-size: 12px; display: flex; align-items: center; justify-content: center; width: 100%; height: 100px; text-align: center; padding: 8px; }
+
+@media (max-width: 700px) {
+  .steps { grid-template-columns: 1fr; }
+  .features { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 32px; }
+  .hero { padding: 60px 0 40px; }
+  .section { padding: 48px 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <div class="hero-logo">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#3a3a3e"/><stop offset="100%" stop-color="#0f0f12"/>
+          </linearGradient>
+          <linearGradient id="shine" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,.15)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </linearGradient>
+        </defs>
+        <circle cx="40" cy="40" r="36" fill="url(#bg)" stroke="rgba(180,180,180,.08)" stroke-width="1.5"/>
+        <ellipse cx="40" cy="28" rx="26" ry="14" fill="url(#shine)"/>
+        <text x="40" y="46" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="26" font-weight="700" fill="#fff">CC</text>
+      </svg>
+    </div>
+    <h1>Copy Collector</h1>
+    <p>Collect text from any app. Paste all in order.<br>Your personal text collector for Windows.</p>
+    <div class="btn-wrap">
+      <a class="btn btn-primary" href="https://github.com/nihalusaidh/Copy-Collector/releases/download/v1.0.0/Copy.Collector.Setup.1.0.0.exe">
+        <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.84v4h3.66V9h3.84L12 2z"/></svg>
+        Download Free
+      </a>
+    </div>
+    <p class="small-note">v1.0.0 · Windows 10/11 · 80 MB · <a href="https://github.com/nihalusaidh/Copy-Collector">View on GitHub</a></p>
+  </div>
+</div>
+
+<div class="section" style="padding-top:0">
+  <div class="container">
+    <h2 class="section-title">How it works</h2>
+    <p class="section-sub">Three simple steps — no accounts, no setup, no cloud.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="ill"><div class="ill-placeholder">[ Screenshot: copy text in any app → tiny CC icon appears ]</div></div>
+        <div class="step-num">1</div>
+        <h3>Copy anything</h3>
+        <p>Select text in any app and press Ctrl+C. A tiny CC icon pops up near your cursor.</p>
+      </div>
+      <div class="step">
+        <div class="ill"><div class="ill-placeholder">[ Screenshot: clicking the CC icon saves to collection ]</div></div>
+        <div class="step-num">2</div>
+        <h3>Click to save</h3>
+        <p>Left-click the CC icon to confirm. Ignore it for 3 seconds and it disappears — nothing is saved.</p>
+      </div>
+      <div class="step">
+        <div class="ill"><div class="ill-placeholder">[ Screenshot: collection manager with items listed ]</div></div>
+        <div class="step-num">3</div>
+        <h3>Paste all in order</h3>
+        <p>Open the collection manager (Ctrl+Shift+C), arrange items, and paste everything at once.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="background:#0a0a0c">
+  <div class="container">
+    <h2 class="section-title">Features</h2>
+    <p class="section-sub">Designed for researchers, writers, and anyone who collects text.</p>
+    <div class="features">
+      <div class="feature">
+        <h3><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Works in any app</h3>
+        <p>Word, Chrome, PDF readers, WPS, VS Code, terminals — if you can copy text, Copy Collector can save it.</p>
+      </div>
+      <div class="feature">
+        <h3><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>100% local & private</h3>
+        <p>No servers, no accounts, no API calls. All data stays on your machine in a local JSON file.</p>
+      </div>
+      <div class="feature">
+        <h3><svg viewBox="0 0 24 24"><path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/></svg>Drag to reorder</h3>
+        <p>Drag items up or down in the collection manager. Auto-scroll when you reach the edge.</p>
+      </div>
+      <div class="feature">
+        <h3><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>Search & filter</h3>
+        <p>Press Ctrl+F to search your collection. Matching text is highlighted as you type.</p>
+      </div>
+      <div class="feature">
+        <h3><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>Session history</h3>
+        <p>Complete a session to archive your collection. Browse past sessions with their own copy options.</p>
+      </div>
+      <div class="feature">
+        <h3><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12z"/></svg>Two themes</h3>
+        <p>Dark glossy black (matching the CC icon) or clean white. Press Ctrl+D to toggle anytime.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container">
+    <h2 class="section-title">Why not a clipboard manager?</h2>
+    <p class="section-sub">Copy Collector is designed for a different workflow.</p>
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead><tr><th></th><th>Copy Collector</th><th>Clipboard Managers (Paste, Maccy, Ditto)</th><th>Grammarly</th></tr></thead>
+        <tbody>
+          <tr><td>Confirm before saving</td><td class="yes">✅ Click CC icon</td><td class="no">❌ Auto-saves everything</td><td class="no">❌ Not a collector</td></tr>
+          <tr><td>Ignore = discard</td><td class="yes">✅ 3s timeout</td><td class="no">❌ Saves everything</td><td class="no">❌</td></tr>
+          <tr><td>Select & number items</td><td class="yes">✅ Checkbox + numbered order</td><td class="no">❌ Usually just paste history</td><td class="no">❌</td></tr>
+          <tr><td>Works in any app</td><td class="yes">✅ Desktop app</td><td class="no">❌ Many macOS-only</td><td class="yes">✅ Desktop app</td></tr>
+          <tr><td>Zero servers, no account</td><td class="yes">✅</td><td class="no">❌ Many require sync</td><td class="no">❌ Requires account</td></tr>
+          <tr><td>Free</td><td class="yes">✅</td><td class="no">❌ Paid</td><td class="no">❌ Paid</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="text-align:center; background:#0a0a0c">
+  <div class="container">
+    <h2 class="section-title">Ready to try it?</h2>
+    <p class="section-sub">Free. No sign-up. No data leaves your computer.</p>
+    <a class="btn btn-primary" href="https://github.com/nihalusaidh/Copy-Collector/releases/download/v1.0.0/Copy.Collector.Setup.1.0.0.exe">
+      <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.84v4h3.66V9h3.84L12 2z"/></svg>
+      Download Free
+    </a>
+  </div>
+</div>
+
+<div class="footer">
+  Built by <a href="https://github.com/nihalusaidh">Nihal</a> · <a href="https://github.com/nihalusaidh/Copy-Collector">Source on GitHub</a>
+</div>
+
+</body>
+</html>
