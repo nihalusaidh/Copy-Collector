@@ -34,7 +34,9 @@ a:hover { text-decoration: underline; }
 .step-num { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #3a3a3e, #1a1a1e); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-weight: 700; font-size: 16px; color: #fff; }
 .step h3 { font-size: 18px; margin-bottom: 8px; color: #fff; }
 .step p { font-size: 14px; color: #888; }
-.step .ill { width: 100%; height: 100px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; }
+.step .ill { width: 100%; margin-bottom: 12px; display: flex; flex-direction: column; align-items: center; }
+.step .ill img { width: 100%; border-radius: 8px; border: 1px solid #333; }
+.step .ill .caption { font-size: 12px; color: #777; margin-top: 8px; line-height: 1.4; text-align: center; }
 
 /* Features */
 .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -57,8 +59,6 @@ a:hover { text-decoration: underline; }
 .footer { text-align: center; padding: 40px 0; border-top: 1px solid #222; color: #555; font-size: 14px; }
 .footer a { color: #777; }
 
-/* Placeholder illustration boxes */
-.ill-placeholder { background: #1a1a20; border: 1px dashed #333; border-radius: 8px; color: #555; font-size: 12px; display: flex; align-items: center; justify-content: center; width: 100%; height: 100px; text-align: center; padding: 8px; }
 
 @media (max-width: 700px) {
   .steps { grid-template-columns: 1fr; }
@@ -106,19 +106,28 @@ a:hover { text-decoration: underline; }
     <p class="section-sub">Three simple steps — no accounts, no setup, no cloud.</p>
     <div class="steps">
       <div class="step">
-        <div class="ill"><div class="ill-placeholder">[ Screenshot: copy text in any app → tiny CC icon appears ]</div></div>
+        <div class="ill">
+          <img src="screenshots/step1.png" alt="CC icon appearing after copying text">
+          <div class="caption">The tiny CC icon pops up near your cursor after copying text.</div>
+        </div>
         <div class="step-num">1</div>
         <h3>Copy anything</h3>
         <p>Select text in any app and press Ctrl+C. A tiny CC icon pops up near your cursor.</p>
       </div>
       <div class="step">
-        <div class="ill"><div class="ill-placeholder">[ Screenshot: clicking the CC icon saves to collection ]</div></div>
+        <div class="ill">
+          <img src="screenshots/step2.png" alt="Clicking the CC icon to save">
+          <div class="caption">Left-click the CC icon to save the text to your collection.</div>
+        </div>
         <div class="step-num">2</div>
         <h3>Click to save</h3>
         <p>Left-click the CC icon to confirm. Ignore it for 3 seconds and it disappears — nothing is saved.</p>
       </div>
       <div class="step">
-        <div class="ill"><div class="ill-placeholder">[ Screenshot: collection manager with items listed ]</div></div>
+        <div class="ill">
+          <img src="screenshots/step3.png" alt="Collection manager with saved items">
+          <div class="caption">All saved items appear in the collection manager, ready to reorder and paste.</div>
+        </div>
         <div class="step-num">3</div>
         <h3>Paste all in order</h3>
         <p>Open the collection manager (Ctrl+Shift+C), arrange items, and paste everything at once.</p>
