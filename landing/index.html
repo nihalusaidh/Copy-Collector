@@ -27,6 +27,7 @@ a:hover { text-decoration: underline; }
 .hero .btn-wrap { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 .hero .small-note { font-size: 13px; color: #666; margin-top: 12px; }
 .hero .small-note a { color: #777; }
+.download-count { font-size: 13px; color: #555; margin-top: 6px; min-height: 20px; }
 
 /* Steps */
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 16px; }
@@ -105,6 +106,7 @@ a:hover { text-decoration: underline; }
       </a>
     </div>
     <p class="small-note">v1.0.0 · Windows 10/11 · 80 MB · <a href="https://github.com/nihalusaidh/Copy-Collector">View on GitHub</a></p>
+    <p class="download-count" id="download-count">—</p>
   </div>
 </div>
 
@@ -225,5 +227,16 @@ a:hover { text-decoration: underline; }
   Built by <a href="https://github.com/nihalusaidh">Nihal</a> · <a href="https://github.com/nihalusaidh/Copy-Collector">Source on GitHub</a>
 </div>
 
+<script>
+fetch('https://api.github.com/repos/nihalusaidh/Copy-Collector/releases/latest')
+  .then(r => r.json())
+  .then(data => {
+    if (data && data.assets && data.assets.length) {
+      const total = data.assets.reduce((sum, a) => sum + a.download_count, 0);
+      document.getElementById('download-count').textContent = total + ' downloads';
+    }
+  })
+  .catch(() => {});
+</script>
 </body>
 </html>
